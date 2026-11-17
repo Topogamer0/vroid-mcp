@@ -1,0 +1,25 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install
+        run: uv sync --python ${{ matrix.python }}
+      - name: OCR languages on the runner
+        shell: pwsh
+        run: uv run python -c "from vroid_mcp.vision import ocr; print(ocr.engine_language())"
+        continue-on-error: true
+      - name: Tests
+        run: uv run pytest -ra

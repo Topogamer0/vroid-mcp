@@ -1,0 +1,87 @@
+# UI profile for VRoid Studio 2.14.0, English UI, UIScaling 100 %.
+#
+# Coordinates are client pixels. Region fields (left/top/right/bottom):
+#   int >= 0 -> px from left/top edge, negative int -> px from right/bottom
+#   edge, float 0..1 -> fraction of the client size.
+# Measured on 1024x768 and checked on 1280x800 (96 dpi): the side panels keep
+# a fixed pixel width, so everything on the right is anchored to the right
+# edge and everything on the left to the left edge.
+name: vroid-2.14.0-en
+vroid_version: "2.14.0"
+language: En
+ui_scaling: 100
+measured_client: [1024, 768]
+
+colors:
+  primary: [0, 150, 250]          # "#0096FA" pills, active tab underline
+
+screens:
+  # A screen matches when ALL `all_of` labels are found (OCR 1x) in `region`.
+  # Higher `priority` wins: modals are tested before the screen behind them
+  # (OCR still reads the dimmed background).
+  vrm_settings:
+    priority: 30
+    all_of: ["VRM Settings", "Export Format"]
+  vrm_settings_scrolled:
+    priority: 29
+    all_of: ["VRM Settings", "Back"]
+  select_base:
+    priority: 30
+    all_of: ["Select a base to start with"]
+  export:
+    priority: 20
+    region: {bottom: 240}
+    all_of: ["Export as VRM", "Reduce Polygons"]
+  editor:
+    priority: 10
+    region: {bottom: 48}
+    all_of: ["Face", "Hairstyle", "Body", "Outfit", "Accessories", "Look"]
+  start_dressup:
+    priority: 6
+    all_of: ["Recently Edited", "Get started with the Dress-up feature"]
+  start:
+    priority: 5
+    all_of: ["Recently Edited", "Sample Models"]
+
+tabs: [Face, Hairstyle, Body, Outfit, Accessories, Look]
+
+regions:
+  start_tabs: {bottom: 50}
+  start_header_actions: {left: -200, top: 60, bottom: 130}
+  editor_tabs: {right: 700, bottom: 46}
+  right_panel: {left: -296, top: 50}
+  left_panel: {left: 48, right: 296, top: 50}
+  viewport: {left: 297, right: -297, top: 49}
+  share_menu: {left: -300, top: 28, bottom: 110}
+  export_side: {left: -296, top: 50, bottom: 240}
+
+# Offsets inside the right panel, relative to the panel's right edge (negative
+# x) and to the row label's vertical centre (dy).
+right_panel:
+  # Where to put the mouse wheel. On some tabs (Body) only the lower
+  # "Parameters" list scrolls, so stay near the bottom of the panel.
+  scroll_x: -150
+  scroll_y: -110
+  value_box: {x: -54, dy: 1, w: 70, h: 24}       # numeric field of a slider row
+  color_box: {x: -109, dy: 32, w: 150, h: 26}    # "#RRGGBB" field under a colour label
+  safe_top: 70                    # rows above/below these are partly hidden
+  safe_bottom: -60
+
+tab_underline: {y: 43, h: 5}      # blue bar under the active tab
+
+toolbar:
+  export_share: {x: -97, y: 24}
+  close_x: {x: 24, y: 24}         # ✕ on full-screen pages (export)
+
+vrm_settings:
+  modal_width: 570                # centred
+  field_dy: 38                    # input box centre below its label
+  format_radio_dy: 44             # radios below "Export Format"
+  vrm10_dx: -227                  # radio x relative to window centre
+  vrm00_dx: -107
+  scroll_y: 0.6                   # wheel position (fraction of height)
+
+icons:
+  create_new_plus: {file: icons/create_new_plus.png, region: {right: 0.5, bottom: 0.9}}
+  export_share: {file: icons/export_share.png, region: {left: -200, bottom: 48}}
+  hamburger: {file: icons/hamburger.png, region: {right: 60, bottom: 48}}
